@@ -1,7 +1,19 @@
 = simple_form_for(@workout, html: { class: 'form-horizontal' }) do |f|
-	= f.input :date, label: "Date"
-	= f.input :workout, label: "What area did you workout?", input_html: { class: "form-control" }
-	= f.input :mood, label: "How were you feeling?", input_html: { class: "form-control" }
-	= f.input :length, label: "How long was the workout?", input_html: { class: "form-control" }
+- if @movies.errors.any?
+  - @movies.errors.full_messages.each do |error|
+    .alert.alert-danger.alert-dismissable
+      %a.close{"aria-label" => "close", "data-dismiss" => "alert", :href => "#"} ×
+      %strong= error
+
+.form-group
+   = f.label :Workout
+   = f.text_field :workout, class: "form-control", required: true
+
+- if view == "automatic"
+   = hidden_field_tag 'view',view
+- else
+   = hidden_field_tag 'view',view
+	 = f.input :workout, label: "What area did you workout?", input_html: { class: "form-control" }
+	 = f.input :set, label: "How many sets you want?", input_html: { class: "form-control" }
 	%br/
-	= f.button :submit
+	 = f.button :submit
